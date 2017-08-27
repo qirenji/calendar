@@ -9,11 +9,13 @@ class Calendar {
 		this.init();
 
 	}
+	// 初始化
 	init() {
 		this.monthData = this.getMounthData(this.year,this.month);
  		  this.build(this.monthData);
 			this.updateEvent();
 	}
+	// 创建模版
 	build(monthData) {
 		let bodyHtml = this.rendDate(monthData);
 		let html = `
@@ -52,6 +54,7 @@ class Calendar {
 		// let html =`<span class="year-pre">点我！</span>`
 		this.parent.innerHTML = html;
 	}
+	// 获取某一个月的数据
 	getMounthData(year,month) {
 		let ret=[];
 		let firstDay=new Date(year,month-1,1);
@@ -97,6 +100,7 @@ class Calendar {
 		}
 
 	}
+	// 添加插件的事件
 	updateEvent() {
 		const yearPre = this.parent.querySelector('.year-pre');
 		const yearNext = this.parent.querySelector('.year-next');
@@ -113,11 +117,13 @@ class Calendar {
 		aDate.onclick = this.pickerDate.bind(this);
 		this.oInput.onclick = this.picker.bind(this);
 	}
+	// 更改年份
 	changeYear(num) {
 		this.year += num;
 		this.monthData = this.getMounthData(this.year,this.month);
 		this.render(this.monthData);
 	}
+	// 更改月份
 	changeMonth(num) {
 			this.month += num;
 			if(this.month === 13){
@@ -131,6 +137,7 @@ class Calendar {
 			this.monthData = this.getMounthData(this.year,this.month);
 			this.render(this.monthData);
 		}
+	// 显示日期选择div
 	picker(ev) {
 		if(this.isOpen) {
 			this.parent.querySelector('.picker').classList.remove("picker-show");
@@ -145,6 +152,7 @@ class Calendar {
 			this.isOpen = true;
 		}
 	}
+	// 选择日期
 	pickerDate(ev) {
 		var $target = ev.target;
 		if(!$target.classList.contains('disable')){	
@@ -154,6 +162,7 @@ class Calendar {
 		}
 
 	}
+	// 渲染数据到模版
 	render(monthData) {
 		let bodyHtml = this.rendDate(monthData);
 		
@@ -165,6 +174,7 @@ class Calendar {
 		monthCurrentDOM.innerHTML = `${this.month}月`;
 
 	}
+	// 添加日期数据
 	rendDate(monthData) {
 		let bodyHtml = '';
 		for(let i=0;i<(monthData.days.length)/7;i++)
@@ -183,6 +193,7 @@ class Calendar {
 		}
 		return bodyHtml;
 	}
+	// 选择出来的数据
 	format(date) {
 		let inputData = `${this.monthData.year}-${this.monthData.month}-${date}`;
 		return inputData;
